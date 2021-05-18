@@ -58,7 +58,7 @@ const Login = (props) => {
           </Grid>
         </Grid>
         <Container className={classes.formContainer}>
-          <Typography className={classes.formTitle}>Welcome Back!</Typography>
+          <Typography className={classes.formTitle}>Create an account.</Typography>
           <form onSubmit={handleRegister} autoComplete="off">
             <Grid>
               <FormControl required>
