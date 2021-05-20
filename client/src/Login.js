@@ -1,18 +1,26 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Grid,
-  Box,
-  Typography,
   Button,
   FormControl,
   TextField,
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
 
+import useStyles from './style.js';
+import LoginWrapper from './LoginWrapper';
+
+const inputStyle = {
+  margin: '25px 0 5.8px 5px'
+}
+const labelStyle = {
+  margin: '0 5px'
+}
+
 const Login = (props) => {
-  const history = useHistory();
+  const classes = useStyles();
   const { user, login } = props;
 
   const handleLogin = async (event) => {
@@ -28,41 +36,42 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
+    <LoginWrapper type='login'>
+      <form onSubmit={handleLogin} autoComplete="off">
+        <Grid>
+          <FormControl required>
+            <TextField
+              id="username"
+              className={classes.userInput}
+              margin="normal"
+              name="username"
+              type="text"
+              label="E-mail address"
+              inputProps={{ style: inputStyle }}
+              InputLabelProps={{ style: labelStyle }}
+            />
+          </FormControl>
         </Grid>
-        <form onSubmit={handleLogin}>
-          <Grid>
-            <Grid>
-              <FormControl margin="normal" required>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                />
-              </FormControl>
-            </Grid>
-            <FormControl margin="normal" required>
-              <TextField
-                label="password"
-                aria-label="password"
-                type="password"
-                name="password"
-              />
-            </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
-                Login
+        <FormControl required>
+          <TextField
+            id="password"
+            className={classes.userInput}
+            name="password"
+            type="password"
+            label="Password"
+            aria-label="password"
+            inputProps={{ style: inputStyle }}
+            InputLabelProps={{ style: labelStyle }}
+          />
+        </FormControl>
+        <Grid>
+          <Button type="submit" className={classes.loginButton} variant="contained" color="primary">
+            Login
               </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
-    </Grid>
+        </Grid>
+      </form>
+
+    </LoginWrapper>
   );
 };
 
