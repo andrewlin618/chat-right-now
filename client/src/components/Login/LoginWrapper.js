@@ -7,7 +7,7 @@ import {
     Typography,
     Button
 } from "@material-ui/core";
-import bubble from "./assets/images/bubble.svg";
+import bubble from "../../assets/images/bubble.svg";
 
 const LoginWrapper = (props) => {
     const classes = useStyles();

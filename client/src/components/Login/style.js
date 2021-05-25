@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import backgroundImg from './assets/images/bg-img.png';
+import backgroundImg from '../../assets/images/bg-img.png';
 
 const useStyles = makeStyles((theme) => ({
     leftPage: {
