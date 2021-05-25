@@ -8,10 +8,10 @@ const onlineUsers = require("../../onlineUsers");
 // TODO: for scalability, implement lazy loading
 router.get("/", async (req, res, next) => {
   try {
-    if (!req.user) {
+    if (!req.session.user) {
       return res.sendStatus(401);
     }
-    const userId = req.user.id;
+    const userId = req.session.user.id;
     const conversations = await Conversation.findAll({
       where: {
         [Op.or]: {

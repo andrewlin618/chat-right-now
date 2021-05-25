@@ -5,10 +5,10 @@ const onlineUsers = require("../../onlineUsers");
 // expects {recipientId, text, conversationId } in body (conversationId will be null if no conversation exists yet)
 router.post("/", async (req, res, next) => {
   try {
-    if (!req.user) {
+    if (!req.session.user) {
       return res.sendStatus(401);
     }
-    const senderId = req.user.id;
+    const senderId = req.session.user.id;
     const { recipientId, text, conversationId, sender } = req.body;
 
     // if we already know conversation id, we can save time and just add it to message and return
