@@ -42,7 +42,7 @@ const Messages = (props) => {
           <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
         );
       })}
-      <div ref={bottomRef} />
+      <Box ref={bottomRef} />
     </Box>
   );
 };

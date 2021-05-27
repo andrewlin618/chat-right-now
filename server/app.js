@@ -9,7 +9,6 @@ const db = require("./db");
 const { User } = require("./db/models");
 // create store for sessions to persist in database
 const sessionStore = new SequelizeStore({ db });
-require('dotenv').config()
 
 const { json, urlencoded } = express;
 
