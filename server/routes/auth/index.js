@@ -26,8 +26,8 @@ router.post("/register", async (req, res, next) => {
       process.env.SESSION_SECRET,
       { expiresIn: 86400 }
     );
-    req.cookies.token = token,
-      res.json(user);
+    req.cookies.token = token;
+    res.json(user);
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
       return res.status(401).json({ error: "User already exists" });
