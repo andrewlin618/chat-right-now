@@ -32,7 +32,7 @@ class Search extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form autoComplete="off" onSubmit={this.handleSubmit}>
         <FormControl fullWidth hiddenLabel>
           <FilledInput
             name="search"
