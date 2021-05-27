@@ -77,8 +77,6 @@ router.delete("/logout", (req, res, next) => {
 });
 
 router.get("/user", (req, res, next) => {
-  console.log("req.session:");
-  console.log(req.session);
   if (req.session.token) {
     return res.json(req.session.user);
   } else {
