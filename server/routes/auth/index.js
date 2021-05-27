@@ -62,7 +62,7 @@ router.post("/login", async (req, res, next) => {
         process.env.SESSION_SECRET,
         { expiresIn: 86400 }
       );
-      req.cookies.token = token,
+      req.cookies.token = token;
       req.user = user;
       res.json(user);
     }
