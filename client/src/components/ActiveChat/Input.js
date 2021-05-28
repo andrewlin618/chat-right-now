@@ -51,7 +51,7 @@ class Input extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <form autocomplete="off" className={classes.root} onSubmit={this.handleSubmit}>
+      <form autoComplete="off" className={classes.root} onSubmit={this.handleSubmit}>
         <FormControl fullWidth hiddenLabel>
           <FilledInput
             classes={{ root: classes.input }}
