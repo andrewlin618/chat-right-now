@@ -8,7 +8,7 @@ import {
   TextField,
   FormHelperText,
 } from "@material-ui/core";
-import { register } from "./store/utils/thunkCreators";
+import { register } from "../../store/utils/thunkCreators";
 
 import useStyles from './style.js';
 import LoginWrapper from './LoginWrapper';

@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import backgroundImg from './assets/images/bg-img.png';
+import backgroundImg from '../../assets/images/bg-img.png';
 
 const useStyles = makeStyles((theme) => ({
     leftPage: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         margin: '39px 0 20vh 0'
     },
     rightPage: {
-        width: '58.5vw',
+        width: '55vw',
         [theme.breakpoints.down('sm')]: {
             width: '100vw'
         },
