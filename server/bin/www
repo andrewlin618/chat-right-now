@@ -45,7 +45,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("new-message", (data) => {
-    const socketIds = usersSocketIdMap[data.recipientId];
+    const socketIds = usersSocketIdMap[data.recipientId] || [];
     for (const socketId of socketIds) {
       io.to(socketId).emit("new-message", {
         message: data.message,
