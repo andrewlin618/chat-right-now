@@ -26,8 +26,8 @@ router.post("/register", async (req, res, next) => {
       process.env.SESSION_SECRET,
       { expiresIn: 86400 }
     );
-    req.session.token = token,
-      res.json(user);
+    res.cookie('token', token, { httpOnly: true });
+    res.json(user);
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
       return res.status(401).json({ error: "User already exists" });
@@ -62,8 +62,9 @@ router.post("/login", async (req, res, next) => {
         process.env.SESSION_SECRET,
         { expiresIn: 86400 }
       );
-      req.session.token = token,
-      req.session.user = user;
+      console.log(token);
+      res.cookie('token', token, { httpOnly: true });
+      req.user = user;
       res.json(user);
     }
   } catch (error) {
@@ -72,13 +73,13 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.delete("/logout", (req, res, next) => {
-  req.session.destroy();
+  res.clearCookie('token');
   res.sendStatus(204);
 });
 
 router.get("/user", (req, res, next) => {
-  if (req.session.token) {
-    return res.json(req.session.user);
+  if (req.cookies.token) {
+    return res.json(req.user);
   } else {
     return res.json({});
   }

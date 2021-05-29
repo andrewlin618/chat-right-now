@@ -3,6 +3,7 @@ const express = require("express");
 const { join } = require("path");
 const logger = require("morgan");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const db = require("./db");
@@ -18,17 +19,10 @@ app.use(logger("dev"));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(express.static(join(__dirname, "public")));
-
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  store: sessionStore,
-  saveUninitialized: false,
-  cookie: { secure: false }
-}))
+app.use(cookieParser());
 
 app.use(function (req, res, next) {
-  const token = req.session.token;
+  const token = req.cookies.token;
   if (token) {
     jwt.verify(token, process.env.SESSION_SECRET, (err, decoded) => {
       if (err) {
@@ -37,7 +31,7 @@ app.use(function (req, res, next) {
       User.findOne({
         where: { id: decoded.id },
       }).then((user) => {
-        req.session.user = user;
+        req.user = user;
         return next();
       });
     });
