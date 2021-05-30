@@ -35,7 +35,7 @@ class Home extends Component {
   }
 
   handleLogout = async () => {
-    await this.props.logout(this.props.user.id);
+    await this.props.logout();
   };
 
   render() {
