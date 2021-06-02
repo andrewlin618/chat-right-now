@@ -49,7 +49,6 @@ router.put("/", async (req, res, next) => {
       return res.sendStatus(401);
     }
     const targetIds = req.body.map(message => message.id);
-    console.log(targetIds);
     const result = await Message.update(
       {
         isRead:
@@ -62,7 +61,6 @@ router.put("/", async (req, res, next) => {
         returning: true,
         plain: true
       });
-    console.log({ targetIds, senderId: result[1].dataValues.senderId });
     res.json({ targetIds, senderId: result[1].dataValues.senderId });
   } catch (error) {
     next(error);
