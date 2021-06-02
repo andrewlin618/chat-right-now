@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+import moment from "moment";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -38,7 +40,7 @@ const ChatContent = (props) => {
   const classes = useStyles();
 
   const { conversation } = props;
-  const { latestMessageText, otherUser } = conversation;
+  const { latestMessageText, latestMessageCreatedAt, otherUser } = conversation;
 
   return (
     <Box className={classes.root}>
@@ -48,6 +50,9 @@ const ChatContent = (props) => {
         </Typography>
         <Typography className={classes.previewText}>
           {latestMessageText}
+        </Typography>
+        <Typography className={classes.previewText}>
+          {moment(latestMessageCreatedAt).calendar().replace("Today at ", "")}
         </Typography>
       </Box>
     </Box>
