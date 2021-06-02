@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Box } from "@material-ui/core";
+import { Box, Chip } from "@material-ui/core";
 import { SenderBubble, OtherUserBubble } from "../ActiveChat";
 import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
@@ -12,32 +12,50 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Messages = (props) => {
-  const { messages, otherUser, userId } = props;
+  const { messages, otherUser, userId, firstUnreadId } = props;
   const classes = useStyles();
   const bottomRef = useRef();
+  const unreadRef = useRef();
 
-  const scrollToBottom = () => {
-    bottomRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+  const scrollDown = () => {
+    if (unreadRef.current) {
+      unreadRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    } else {
+      bottomRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   };
 
   useEffect(() => {
     //TODO: Check whether user is reading prev messages:
-    scrollToBottom();
-  });
+    scrollDown();
+  }, [messages, otherUser, firstUnreadId]);
 
   return (
     <Box className={classes.root}>
-      {messages.map((message) => {
+      {messages.map((message, index) => {
         const time = moment(message.createdAt).calendar().replace("Today at ", "");
 
         return message.senderId === userId ? (
           <SenderBubble key={message.id} text={message.text} time={time} />
+        ) : message.id === firstUnreadId && firstUnreadId !== messages[messages.length - 1].id && firstUnreadId !== messages[0].id ? (
+          <Box key={message.id}>
+            <Box display="flex" justifyContent="center">
+              <Chip ref={unreadRef} label="previous messages above" disabled />
+            </Box>
+            <OtherUserBubble text={message.text} time={time} otherUser={otherUser} />
+          </Box>
         ) : (
-          <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
-        );
+          <Box key={message.id}>
+            <OtherUserBubble text={message.text} time={time} otherUser={otherUser} />
+          </Box>
+        )
+          ;
       })}
       <Box ref={bottomRef} />
     </Box>
