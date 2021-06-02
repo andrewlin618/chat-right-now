@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Box } from "@material-ui/core";
 import { SenderBubble, OtherUserBubble } from "../ActiveChat";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,17 +24,14 @@ const Messages = (props) => {
   };
 
   useEffect(() => {
+    //TODO: Check whether user is reading prev messages:
     scrollToBottom();
-  },[])
-
-  useEffect(() => {
-    scrollToBottom();
-  },[messages.length])
+  });
 
   return (
     <Box className={classes.root}>
       {messages.map((message) => {
-        const time = moment(message.createdAt).format("h:mm");
+        const time = moment(message.createdAt).calendar().replace("Today at ", "");
 
         return message.senderId === userId ? (
           <SenderBubble key={message.id} text={message.text} time={time} />

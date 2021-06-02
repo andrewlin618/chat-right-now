@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Box } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
+import BadgeUnread from "./BadgeUnread";
 import { withStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
 import { connect } from "react-redux";
@@ -11,10 +12,12 @@ const styles = {
     height: 80,
     boxShadow: "0 2px 10px 0 rgba(88,133,196,0.05)",
     marginBottom: 10,
+    paddingRight: 30,
     display: "flex",
     alignItems: "center",
     "&:hover": {
-      cursor: "grab",
+      backgroundColor: "#eeeeee",
+      cursor: "pointer",
     },
   },
 };
@@ -27,6 +30,7 @@ class Chat extends Component {
   render() {
     const { classes } = this.props;
     const otherUser = this.props.conversation.otherUser;
+    const { messages } = this.props;
     return (
       <Box
         onClick={() => this.handleClick(this.props.conversation)}
@@ -39,15 +43,17 @@ class Chat extends Component {
           sidebar={true}
         />
         <ChatContent conversation={this.props.conversation} />
+        <BadgeUnread counter={messages.filter(message => !message.isRead && message.senderId === otherUser.id).length}></BadgeUnread>
       </Box>
     );
   }
 }
 
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    setActiveChat: (id) => {
-      dispatch(setActiveChat(id));
+    setActiveChat: (username) => {
+      dispatch(setActiveChat(username));
     },
   };
 };
