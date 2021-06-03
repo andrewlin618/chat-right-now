@@ -18,17 +18,11 @@ const Messages = (props) => {
   const unreadRef = useRef();
 
   const scrollDown = () => {
-    if (unreadRef.current) {
-      unreadRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    } else {
-      bottomRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
+    const scrollRef = unreadRef.current ?? bottomRef.current;
+    scrollRef.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   useEffect(() => {
