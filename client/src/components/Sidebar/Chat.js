@@ -28,9 +28,8 @@ class Chat extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const otherUser = this.props.conversation.otherUser;
-    const { messages } = this.props;
+    const { classes, messages, conversation } = this.props;
+    const otherUser = conversation.otherUser;
     return (
       <Box
         onClick={() => this.handleClick(this.props.conversation)}
