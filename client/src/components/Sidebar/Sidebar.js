@@ -8,7 +8,7 @@ const useStyles = makeStyles(() => ({
   root: {
     paddingLeft: 21,
     paddingRight: 21,
-    flexGrow: 1
+    width: 350
   },
   title: {
     fontSize: 20,
@@ -32,7 +32,7 @@ const Sidebar = (props) => {
       {conversations
         .filter((conversation) => conversation.otherUser.username.includes(searchTerm))
         .map((conversation) => {
-          return <Chat conversation={conversation} key={conversation.otherUser.username} />;
+          return <Chat messages={conversation.messages} conversation={conversation} key={conversation.otherUser.username} unreadCounter={conversation.messages.filter(message => !message.isRead && message.senderId === conversation.otherUser).length} />;
         })}
     </Box>
   );

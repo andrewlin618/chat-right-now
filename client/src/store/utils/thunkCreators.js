@@ -5,6 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  setReadStatus
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -16,7 +17,7 @@ export const fetchUser = () => async (dispatch) => {
     const { data } = await axios.get("/auth/user");
     dispatch(gotUser(data));
     if (data.id) {
-      socket.emit("go-online", data.id);
+      socket.emit("go-online");
     }
   } catch (error) {
     console.error(error);
@@ -29,7 +30,7 @@ export const register = (credentials) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/register", credentials);
     dispatch(gotUser(data));
-    socket.emit("go-online", data.id);
+    socket.emit("go-online");
   } catch (error) {
     console.error(error);
     dispatch(gotUser({ error: error.response.data.error || "Server Error" }));
@@ -40,18 +41,18 @@ export const login = (credentials) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/login", credentials);
     dispatch(gotUser(data));
-    socket.emit("go-online", data.id);
+    socket.emit("go-online");
   } catch (error) {
     console.error(error);
     dispatch(gotUser({ error: error.response.data.error || "Server Error" }));
   }
 };
 
-export const logout = (id) => async (dispatch) => {
+export const logout = () => async (dispatch) => {
   try {
     await axios.delete("/auth/logout");
     dispatch(gotUser({}));
-    socket.emit("logout", id);
+    socket.emit("logout");
   } catch (error) {
     console.error(error);
   }
@@ -62,9 +63,6 @@ export const logout = (id) => async (dispatch) => {
 export const fetchConversations = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
-    for (const conversation of data) {
-      conversation.messages.reverse();
-    }
     dispatch(gotConversations(data));
   } catch (error) {
     console.error(error);
@@ -101,6 +99,16 @@ export const postMessage = (body) => async (dispatch) => {
     console.error(error);
   }
 };
+
+export const updateMessageReadStatus = (body) => async (dispatch) => {
+
+  try {
+    const { data } = await axios.put("/api/messages", body);
+    dispatch(setReadStatus(data.targetIds, data.senderId));
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export const searchUsers = (searchTerm) => async (dispatch) => {
   try {

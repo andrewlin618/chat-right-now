@@ -25,10 +25,10 @@ const Login = (props) => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    const username = event.target.username.value;
+    const email = event.target.email.value;
     const password = event.target.password.value;
 
-    await login({ username, password });
+    await login({ email, password });
   };
 
   if (user.id) {
@@ -41,10 +41,10 @@ const Login = (props) => {
         <Grid>
           <FormControl required>
             <TextField
-              id="username"
+              id="email"
               className={classes.userInput}
               margin="normal"
-              name="username"
+              name="email"
               type="text"
               label="E-mail address"
               inputProps={{ style: inputStyle }}
