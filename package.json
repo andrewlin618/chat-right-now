@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "A one-to-one realtime chat app.",
   "main": "index.js",
+  "engines": {
+    "node": "16.1.0"
+  },
   "scripts": {
-    "client":"cd client && npm start",
-    "server":"cd server && npm run dev"
+    "build": "cd client && npm install && npm run build",
+    "prod": "cd server && npm install && npm run prod",
+    "client": "cd client && npm start",
+    "server": "cd server && npm run dev"
   },
   "repository": {
     "type": "git",
