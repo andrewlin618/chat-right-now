@@ -28,7 +28,7 @@ const Messages = (props) => {
   useEffect(() => {
     //TODO: Check whether user is reading prev messages:
     scrollDown();
-  }, [messages, otherUser, firstUnreadId]);
+  }, [messages.length, otherUser, firstUnreadId]);
 
   return (
     <Box className={classes.root}>
